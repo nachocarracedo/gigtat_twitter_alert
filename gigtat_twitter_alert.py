@@ -1,12 +1,12 @@
 from twython import Twython
 import pandas as pd
-import settings #APP_KEY, APP_SECRET, OAUTH_TOKEN, OAUTH_TOKEN_SECRET
+import settings 
 import os.path
 import smtplib
 
 
 if __name__ == "__main__":
-	# init list to save data
+	####### Init
 	tweet_text_hit= []
 	tweet_date_hit= []
 	tweet_id_hit = []
@@ -24,25 +24,24 @@ if __name__ == "__main__":
 				 '@Sasquatch','@lollapalooza','@pitchforkfest',
 				 '@Summerfest','@Stagecoach','@sfoutsidelands',
 				 '@festivaltortuga','@ultra','@Bonnaroo',
-				 '@EDC_LasVegas','@coachella','@nachocrel']
+				 '@EDC_LasVegas','@coachella']
 
 	# kewords to look for
 	keywords = ['set time','settime','schedule','timetable']   
 
-	# twython auth
+	####### twython auth
 	twitter = Twython(settings.APP_KEY,
 					  settings.APP_SECRET,
 					  settings.OAUTH_TOKEN,
 					  settings.OAUTH_TOKEN_SECRET)
 
-	# incremental search since last tweet scanned
+	####### Incremental search since last tweet scanned
 	incremental = False
 	if os.path.isfile("./csv/last_tweet.csv"):
 		last_tweet = pd.read_csv("./csv/last_tweet.csv",encoding='utf-8')
 		incremental = True
-		#print("Found")
-
-	# scan tweets    
+		
+	####### Get and scan tweets 
 	for festival_id in festivals:
 		if incremental:
 			lt = int(last_tweet[last_tweet["festival"]==festival_id]["last_tweet_id"].iloc[0])
@@ -77,29 +76,29 @@ if __name__ == "__main__":
 				tweet_text_hit.append(t["text"])
 				tweet_date_hit.append(t["created_at"])
 				tweet_id_hit.append(t["id"])
-					
-					
+	
+	####### Save info
+	# save last tweet				
 	pd.DataFrame({'festival':festivals,
 				  'last_tweet_id':last_tweet_id}).to_csv("./csv/last_tweet.csv", index=False, encoding='utf-8')
-					
+	
+	# save last alerts sent
 	pd.DataFrame({'festival_id':tweet_account_hit,
 				  'tweet_text_hit':tweet_text_hit,
 				  'date':tweet_date_hit,
 				  'tweet_id':tweet_id_hit}).to_csv("./csv/tweet_hits.csv", index=False)
 	
 	
-	# send mail
+	####### Send email
 	if len(tweet_text_hit) > 0:
 		print("matches found")
 		fromaddr = settings.EMAIL_USERNAME
 		toaddrs  = settings.EMAIL_TO
-		#hello@gigtat.com
-		msg = "Gigtat twitter scan found matches!! :\n\n"
+		msg = "GIGTAT twitter scan found matches!! :\n\n"
     
 		for t in range(len(tweet_text_hit)):
 			msg = msg + tweet_account_hit[t] + "\n"
 			msg = msg + tweet_text_hit[t] + "\n\n"
-        
 			From = fromaddr 
 			to = toaddrs 
 			subject = 'Gigtat: Twitter hit alert'  
