@@ -10,4 +10,4 @@ EMAIL_TO = ""
 try:
 	from private import *
 except Exception:
-	print("error")
+	pass

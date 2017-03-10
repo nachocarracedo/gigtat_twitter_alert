@@ -14,4 +14,6 @@ Go to https://apps.twitter.com/ and log in with your Twitter user account. These
 
 3) Add email info to settings.py
 
+4) Make sure you are running Python 3.X and install requirements.txt (pip install -r /path/to/requirements.txt)
+
 4) Run script
