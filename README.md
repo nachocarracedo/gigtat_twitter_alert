@@ -1,4 +1,4 @@
-## GITTAT twitter alerts
+## GIGTAT twitter alerts
 
 ### USE 
 

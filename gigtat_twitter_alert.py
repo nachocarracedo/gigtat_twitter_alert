@@ -13,7 +13,7 @@ if __name__ == "__main__":
 	tweet_account_hit = []
 	last_tweet_id = []
 
-	# festivals twitter accounts
+	# festival twitter accounts
 	festivals = ['@mysteryland', '@MovementDetroit','@nocturnalwland',
 				 '@BeyondWland', '@lcpeachfestival','@Bumbershoot' ,
 				 '@ElectricZooNY' ,'@JamboOfficial','@buckeye_fest',
@@ -27,7 +27,7 @@ if __name__ == "__main__":
 				 '@EDC_LasVegas','@coachella']
 
 	# kewords to look for
-	keywords = ['set time','settime','schedule','timetable']   
+	keywords = ['set time','settime','schedule','timetable','time table']   
 
 	####### twython auth
 	twitter = Twython(settings.APP_KEY,
@@ -95,7 +95,8 @@ if __name__ == "__main__":
 		fromaddr = settings.EMAIL_USERNAME
 		toaddrs  = settings.EMAIL_TO
 		msg = "GIGTAT twitter scan found matches!! :\n\n"
-    
+		
+		# create email body text
 		for t in range(len(tweet_text_hit)):
 			msg = msg + tweet_account_hit[t] + "\n"
 			msg = msg + tweet_text_hit[t] + "\n\n"
