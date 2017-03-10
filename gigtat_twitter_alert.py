@@ -26,7 +26,7 @@ if __name__ == "__main__":
 				 '@festivaltortuga','@ultra','@Bonnaroo',
 				 '@EDC_LasVegas','@coachella']
 
-	# kewords to look for
+	# kewords 
 	keywords = ['set time','settime','schedule','timetable','time table']   
 
 	####### twython auth
@@ -35,7 +35,7 @@ if __name__ == "__main__":
 					  settings.OAUTH_TOKEN,
 					  settings.OAUTH_TOKEN_SECRET)
 
-	####### Incremental search since last tweet scanned
+	####### Incremental search 
 	incremental = False
 	if os.path.isfile("./csv/last_tweet.csv"):
 		last_tweet = pd.read_csv("./csv/last_tweet.csv",encoding='utf-8')
