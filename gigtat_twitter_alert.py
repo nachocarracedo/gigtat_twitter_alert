@@ -37,8 +37,8 @@ if __name__ == "__main__":
 
 	# incremental search since last tweet scanned
 	incremental = False
-	if os.path.isfile("./last_tweet.csv"):
-		last_tweet = pd.read_csv("./last_tweet.csv",encoding='utf-8')
+	if os.path.isfile("./csv/last_tweet.csv"):
+		last_tweet = pd.read_csv("./csv/last_tweet.csv",encoding='utf-8')
 		incremental = True
 		#print("Found")
 
@@ -50,7 +50,11 @@ if __name__ == "__main__":
 				tweets = twitter.get_user_timeline(screen_name=festival_id,
 												   since_id=lt,
 												   exclude_replies=False)
-			except TwitterError as e: print(e)
+			except TwitterError as e: 
+				print(e)
+				tweets = twitter.get_user_timeline(screen_name=festival_id,
+												   count=200,
+												   exclude_replies=False)
 		
 		else:
 			try:
@@ -76,19 +80,19 @@ if __name__ == "__main__":
 					
 					
 	pd.DataFrame({'festival':festivals,
-				  'last_tweet_id':last_tweet_id}).to_csv("last_tweet.csv", index=False, encoding='utf-8')
+				  'last_tweet_id':last_tweet_id}).to_csv("./csv/last_tweet.csv", index=False, encoding='utf-8')
 					
 	pd.DataFrame({'festival_id':tweet_account_hit,
 				  'tweet_text_hit':tweet_text_hit,
 				  'date':tweet_date_hit,
-				  'tweet_id':tweet_id_hit}).to_csv("tweet_hits.csv", index=False)
+				  'tweet_id':tweet_id_hit}).to_csv("./csv/tweet_hits.csv", index=False)
 	
 	
 	# send mail
 	if len(tweet_text_hit) > 0:
 		print("matches found")
 		fromaddr = settings.EMAIL_USERNAME
-		toaddrs  = 'nachocarracedo@yahoo.es'
+		toaddrs  = settings.EMAIL_TO
 		#hello@gigtat.com
 		msg = "Gigtat twitter scan found matches!! :\n\n"
     
