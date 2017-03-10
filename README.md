@@ -17,4 +17,4 @@ Go to https://apps.twitter.com/ and log in with your Twitter user account.
 
 5) Make sure you are running Python 3.X and install requirements.txt (pip install -r /path/to/requirements.txt)
 
-6) Run script (python gigtat_twitter_alert.py) or add it to cron to run ever X min.
+6) Run script (python gigtat_twitter_alert.py) or add it to cron to run every X min.
