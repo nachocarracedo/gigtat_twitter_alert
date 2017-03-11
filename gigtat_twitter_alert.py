@@ -27,7 +27,7 @@ if __name__ == "__main__":
 				 '@EDC_LasVegas','@coachella']
 
 	# kewords 
-	keywords = ['set time','settime','schedule','timetable','time table','day']   
+	keywords = ['set time','settime','schedule','timetable','time table']   
 
 	####### twython auth
 	twitter = Twython(settings.APP_KEY,
@@ -38,8 +38,7 @@ if __name__ == "__main__":
 	####### Incremental search 
 	incremental = False
 	if os.path.isfile("./csv/last_tweet.csv"):
-		last_tweet = pd.read_csv("./csv/last_tweet.csv",
-								encoding='utf-8')
+		last_tweet = pd.read_csv("./csv/last_tweet.csv", encoding='utf-8')
 		incremental = True
 		
 	####### Get and scan tweets 
@@ -94,11 +93,9 @@ if __name__ == "__main__":
 						'tweet_id':tweet_id_hit})
 	if os.path.isfile("./csv/tweet_hits.csv"):
 		th1 = pd.read_csv('./csv/tweet_hits.csv')
-		pd.concat([th1, th2]).to_csv("./csv/tweet_hits.csv",
-									index=False)
+		pd.concat([th1, th2]).to_csv("./csv/tweet_hits.csv", index=False)
 	else:
-		th2.to_csv("./csv/tweet_hits.csv",
-					index=False)
+		th2.to_csv("./csv/tweet_hits.csv", index=False)
 	
 	####### Send email
 	if len(tweet_text_hit) > 0:
