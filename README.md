@@ -1,10 +1,10 @@
 ## GIGTAT twitter alerts
 
-This script will check twitter accounts and will scan tweets looking for keywords. If keywords are found an email is sent with the twitter account, time of posting, and tweet text. See gigtat_twitter_alert.py for accounts and kewords.
+This script will check twitter accounts and will scan tweets looking for keywords. If keywords are found an email is sent with the twitter account, time of posting, and tweet text.
 
-First time the script is run, if *./csv/last_tweet.csv* doesn't exist, the script will check the last 2 tweets for each account. Following executions of the script will check only new tweets.
+First time the script is run, if `./csv/last_tweet.csv` doesn't exist, the script will check the last 2 tweets for each account. Following executions of the script will check only new tweets.
 
-A log of all tweets that have keywords in it will be saved in /csv/tweet_hits.csv.
+A log of all tweets that have keywords in it will be saved in `./csv/tweet_hits.csv`.
 
 
 ### USE 
@@ -28,6 +28,6 @@ Go to *https://apps.twitter.com/* and log in with your Twitter user account.
 * Add SMTP server used to send email [E.g. gmail: *smtp.gmail.com:587*]
 * Edit twitter accounts to be scanned and keywords to look for(case insensitive) if needed.
 
-5) Make sure you are running Python 3.X and install libraries in requirements.txt (*pip install -r /path/to/requirements.txt*). Use *pip install libraryname* to install any other library.
+5) Make sure you are running Python 3.X and install libraries in requirements.txt (`pip install -r /path/to/requirements.txt`). Use `pip install libraryname` to install any other library.
 
-6) Run script manually (python gigtat_twitter_alert.py) or add it to cron to run every X min.
+6) Run script manually (`python gigtat_twitter_alert.py`) or add it to cron to run every X min [Every 15 min: `*/15 * * * * /path/to/command`]
