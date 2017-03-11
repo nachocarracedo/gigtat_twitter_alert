@@ -27,7 +27,7 @@ if __name__ == "__main__":
 				 '@EDC_LasVegas','@coachella']
 
 	# kewords 
-	keywords = ['set time','settime','schedule','timetable','time table']   
+	keywords = ['set time','settime','schedule','timetable','time table','day']   
 
 	####### twython auth
 	twitter = Twython(settings.APP_KEY,
@@ -47,8 +47,8 @@ if __name__ == "__main__":
 			lt = int(last_tweet[last_tweet["festival"]==festival_id]["last_tweet_id"].iloc[0])
 			try:
 				tweets = twitter.get_user_timeline(screen_name=festival_id,
-												   since_id=lt,
-												   exclude_replies=True)
+				since_id=lt,
+				exclude_replies=True)
 			except Exception as e:
 					print("***** Error retrieving the tweets ****")
 					print(e)
@@ -56,8 +56,8 @@ if __name__ == "__main__":
 		else: # if there is no file ./csv/last_tweet.csv get last 2 tweets
 			try:
 				tweets = twitter.get_user_timeline(screen_name=festival_id,
-												   count=2,
-												   exclude_replies=True)
+				count=2,
+				exclude_replies=True)
 			except Exception as e:
 					print("***** Error retrieving the tweets ****")
 					print(e)
@@ -85,7 +85,10 @@ if __name__ == "__main__":
 				  'last_tweet_id':last_tweet_id}).to_csv("./csv/last_tweet.csv", index=False, encoding='utf-8')
 	
 	# save alerts sent
-	th2 = pd.DataFrame({'festival_id':tweet_account_hit,'tweet_text_hit':tweet_text_hit,'date':tweet_date_hit,'tweet_id':tweet_id_hit})
+	th2 = pd.DataFrame({'festival_id':tweet_account_hit,
+	'tweet_text_hit':tweet_text_hit,
+	'date':tweet_date_hit,
+	'tweet_id':tweet_id_hit})
 	if os.path.isfile("./csv/tweet_hits.csv"):
 		th1 = pd.read_csv('./csv/tweet_hits.csv')
 		pd.concat([th1, th2]).to_csv("./csv/tweet_hits.csv", index=False)
