@@ -52,13 +52,13 @@ if __name__ == "__main__":
 			except TwitterError as e: 
 				print(e)
 				tweets = twitter.get_user_timeline(screen_name=festival_id,
-												   count=200,
+												   count=5,
 												   exclude_replies=False)
 		
 		else:
 			try:
 				tweets = twitter.get_user_timeline(screen_name=festival_id,
-												   count=200,
+												   count=3,
 												   exclude_replies=False)
 			except TwitterError as e: print(e)
 		 
