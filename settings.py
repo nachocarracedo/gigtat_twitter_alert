@@ -6,7 +6,6 @@ EMAIL_USERNAME = ""
 EMAIL_PASSWORD = ""
 EMAIL_TO = ""
 
-
 try:
 	from private import *
 except Exception:

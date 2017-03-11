@@ -3,7 +3,7 @@ import pandas as pd
 import settings 
 import os.path
 import smtplib
-
+import string
 
 if __name__ == "__main__":
 	####### Init
@@ -43,24 +43,25 @@ if __name__ == "__main__":
 		
 	####### Get and scan tweets 
 	for festival_id in festivals:
-		if incremental:
+		if incremental: # get only new tweets since last retreival
 			lt = int(last_tweet[last_tweet["festival"]==festival_id]["last_tweet_id"].iloc[0])
 			try:
 				tweets = twitter.get_user_timeline(screen_name=festival_id,
 												   since_id=lt,
-												   exclude_replies=False)
-			except TwitterError as e: 
-				print(e)
-				tweets = twitter.get_user_timeline(screen_name=festival_id,
-												   count=5,
-												   exclude_replies=False)
+												   exclude_replies=True)
+			except Exception as e:
+					print("***** Error retrieving the tweets ****")
+					print(e)
 		
-		else:
+		else: # if there is no file ./csv/last_tweet.csv get last 2 tweets
 			try:
 				tweets = twitter.get_user_timeline(screen_name=festival_id,
-												   count=3,
-												   exclude_replies=False)
-			except TwitterError as e: print(e)
+												   count=2,
+												   exclude_replies=True)
+			except Exception as e:
+					print("***** Error retrieving the tweets ****")
+					print(e)
+					
 		 
 		# save last tweet id 
 		if len(tweets) > 0:
@@ -73,7 +74,8 @@ if __name__ == "__main__":
 			text = t["text"].lower()
 			if any(kb in text for kb in keywords):
 				tweet_account_hit.append(festival_id)
-				tweet_text_hit.append(t["text"])
+				printable = set(string.printable)
+				tweet_text_hit.append("".join(list(filter(lambda x: x in printable, t["text"]))))		
 				tweet_date_hit.append(t["created_at"])
 				tweet_id_hit.append(t["id"])
 	
@@ -82,23 +84,24 @@ if __name__ == "__main__":
 	pd.DataFrame({'festival':festivals,
 				  'last_tweet_id':last_tweet_id}).to_csv("./csv/last_tweet.csv", index=False, encoding='utf-8')
 	
-	# save last alerts sent
-	pd.DataFrame({'festival_id':tweet_account_hit,
-				  'tweet_text_hit':tweet_text_hit,
-				  'date':tweet_date_hit,
-				  'tweet_id':tweet_id_hit}).to_csv("./csv/tweet_hits.csv", index=False)
-	
+	# save alerts sent
+	th2 = pd.DataFrame({'festival_id':tweet_account_hit,'tweet_text_hit':tweet_text_hit,'date':tweet_date_hit,'tweet_id':tweet_id_hit})
+	if os.path.isfile("./csv/tweet_hits.csv"):
+		th1 = pd.read_csv('./csv/tweet_hits.csv')
+		pd.concat([th1, th2]).to_csv("./csv/tweet_hits.csv", index=False)
+	else:
+		th2.to_csv("./csv/tweet_hits.csv", index=False)
 	
 	####### Send email
 	if len(tweet_text_hit) > 0:
-		print("matches found")
+		print("Matches found ... ")
 		fromaddr = settings.EMAIL_USERNAME
 		toaddrs  = settings.EMAIL_TO
 		msg = "GIGTAT twitter scan found matches!! :\n\n"
 		
 		# create email body text
 		for t in range(len(tweet_text_hit)):
-			msg = msg + tweet_account_hit[t] + "\n"
+			msg = msg + tweet_account_hit[t] + " --- " + tweet_date_hit[t] + "\n"
 			msg = msg + tweet_text_hit[t] + "\n\n"
 			From = fromaddr 
 			to = toaddrs 
@@ -123,6 +126,10 @@ if __name__ == "__main__":
 			server.login(username,password)
 			server.sendmail(fromaddr, toaddrs, email_text)
 			server.quit()
+			print("Email sent successfully")
         
-		except:  
+		except Exception as e:
 			print ('Something went wrong sending the email')
+			print (e)
+	else:
+		print("Matches NOT found ... ")
