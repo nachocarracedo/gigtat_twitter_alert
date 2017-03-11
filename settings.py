@@ -22,7 +22,7 @@ TWITTER_AC_MONITOR = ['@mysteryland', '@MovementDetroit','@nocturnalwland',
 				'@festivaltortuga','@ultra','@Bonnaroo',
 				'@EDC_LasVegas','@coachella']
 				
-KEYWORDS = ['set time','settime','schedule','timetable','time table','day'] 
+KEYWORDS = ['set time','settime','schedule','timetable','time table'] 
 
 try:
 	from private import *

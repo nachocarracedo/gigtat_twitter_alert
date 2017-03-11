@@ -12,7 +12,7 @@ A log of all tweets that have keywords in it will be saved in /csv/tweet_hits.cs
 1) Copy all files and folders of this repository into a folder.
 
 2) Create a Twitter user account if you don't have one already.
-Go to https://apps.twitter.com/ and log in with your Twitter user account. 
+Go to *https://apps.twitter.com/* and log in with your Twitter user account. 
 
 3) Get dev account under same name and get your twitter keys:
 
@@ -23,13 +23,11 @@ Go to https://apps.twitter.com/ and log in with your Twitter user account.
 
 4) Open settings.py and:
 
-* Add your twitter keys and access tokens from 'https://apps.twitter.com/'.
-* Add email credentials and recipient to settings.py (you may need to enable access for less secure apps with your email provider [E.g. gmail: https://www.google.com/settings/security/lesssecureapps])
-* Add SMTP server used to send email. E.g.'smtp.gmail.com:587'
-* Edit twitter accounts to check and keywords to look for if needed.
+* Add your twitter keys and access tokens from *https://apps.twitter.com/*.
+* Add email credentials and recipient to settings.py (you may need to enable access for less secure apps with your email provider [E.g. gmail: *https://www.google.com/settings/security/lesssecureapps*])
+* Add SMTP server used to send email [E.g. gmail: *smtp.gmail.com:587*]
+* Edit twitter accounts to be scanned and keywords to look for(case insensitive) if needed.
 
-6) Make sure you are running Python 3.X and install libraries in requirements.txt ('pip install -r /path/to/requirements.txt'). Use 'pip install libraryname' to install any other library.
+5) Make sure you are running Python 3.X and install libraries in requirements.txt (*pip install -r /path/to/requirements.txt*). Use *pip install libraryname* to install any other library.
 
-7) Change SMTP srver
-
-7) Run script (python gigtat_twitter_alert.py) or add it to cron to run every X min.
+6) Run script manually (python gigtat_twitter_alert.py) or add it to cron to run every X min.
