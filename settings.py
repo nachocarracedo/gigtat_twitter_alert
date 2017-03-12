@@ -20,7 +20,7 @@ TWITTER_AC_MONITOR = ['@mysteryland', '@MovementDetroit','@nocturnalwland',
 				'@Sasquatch','@lollapalooza','@pitchforkfest',
 				'@Summerfest','@Stagecoach','@sfoutsidelands',
 				'@festivaltortuga','@ultra','@Bonnaroo',
-				'@EDC_LasVegas','@coachella']
+				'@EDC_LasVegas','@coachella','@SpringAwakeFest']
 				
 KEYWORDS = ['set time','settime','schedule','timetable','time table'] 
 
